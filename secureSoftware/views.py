@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from . import eccV
 from . import models
+import ast
 
 
 SIGN_MESSAGE = {'message':'Failed'}
@@ -34,7 +35,7 @@ def signing(file):
     signature = eccV.sign_message(eccV.private_key,hashed_file)
     signedSoftware = models.Software()
     signedSoftware.signature = signature
-    signedSoftware.public_key = eccV.public_key[0]
+    signedSoftware.public_key = eccV.public_key
     signedSoftware.save()
     file.close()
     return "signed"
@@ -47,7 +48,10 @@ def verifying(file):
 
     validity = False
     for entry in all_entries:
-        validity = eccV.verify_signature(entry.public_key,hashed_file,entry.signature)
+        signature = ast.literal_eval(entry.signature)
+        public_key = ast.literal_eval(entry.public_key)
+        print(type(public_key))
+        validity = eccV.verify_signature(public_key,hashed_file,signature)
         if validity == True:
             break
     

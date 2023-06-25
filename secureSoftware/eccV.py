@@ -132,3 +132,20 @@ def verify_signature(public_key, hashed_message, signature):
 private_key = int.from_bytes(os.urandom(32), 'big') % (curve.n - 1) + 1
 public_key = scalar_multiplication(private_key, curve.G, curve)
 
+
+# private_key = int.from_bytes(os.urandom(32), 'big') % (curve.n - 1) + 1
+# message = b"Hello, ECC!"
+
+# # Hash the message
+# hashed_message = hash_message(message)
+
+# # Sign the hashed message using the private key
+# signature = sign_message(private_key, hashed_message)
+
+# # Verify the signature using the public key (assuming public_key is valid)
+# public_key = scalar_multiplication(private_key, curve.G, curve)
+# print(type(public_key))
+# is_valid = verify_signature(public_key, hashed_message, signature)
+
+# print(type(public_key),public_key)
+# print("Signature Valid:", is_valid)
